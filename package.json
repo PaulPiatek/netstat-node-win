@@ -1,12 +1,9 @@
 {
-  "name": "native-netstat",
+  "name": "windows-netstat",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "description": "A Node Js Module for Windows which uses GetExtendedTcpTable",
+  "main": "test.js",
+  "author": "Paul Piatek",
+  "license": "MIT",
   "devDependencies": {}
 }
