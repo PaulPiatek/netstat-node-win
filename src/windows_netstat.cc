@@ -1,3 +1,5 @@
+// had to put windows header files before nodes,
+// otherwise electron-rebuild would fail.... :/
 #include <winsock2.h>
 #include <iphlpapi.h>
 #include <Ws2tcpip.h>
