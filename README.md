@@ -8,6 +8,7 @@ Works only on Windows.
 [node-gyp](https://github.com/nodejs/node-gyp) is needed to build the module 
 
 ### Compile and Link
+npm run configure
 npm run build
 
 ### Basic Test - Should give some output on the console

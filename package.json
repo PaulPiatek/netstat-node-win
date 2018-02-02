@@ -1,12 +1,14 @@
 {
   "name": "windows-netstat",
   "scripts": {
+    "configure": "node-gyp configure",
     "build": "node-gyp build",
+    "rebuild": "node-gyp rebuild",
     "test": "node test.js"
   },
   "version": "1.0.0",
   "description": "A Node Js Module for Windows which uses GetExtendedTcpTable",
-  "main": "test.js",
+  "main": "index.js",
   "author": "Paul Piatek",
   "license": "MIT",
   "devDependencies": {}

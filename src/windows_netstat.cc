@@ -1,11 +1,8 @@
-#include <node.h>
-#include <v8.h>
 #include <winsock2.h>
 #include <iphlpapi.h>
 #include <Ws2tcpip.h>
-
-#pragma comment(lib, "iphlpapi.lib")
-#pragma comment(lib, "ws2_32.lib")
+#include <node.h>
+#include <v8.h>
 
 using namespace v8;
 
