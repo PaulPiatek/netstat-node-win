@@ -156,4 +156,5 @@ void getConnections(Local<Array> *result_list, Isolate *isolate)
         (*result_list)->Set(counter, result);
         counter++;
     }
+    processMap.clear();
 }
