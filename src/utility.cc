@@ -105,6 +105,7 @@ void DWORDToString(char *ipString, DWORD address)
 
 void getConnections(Local<Array> *result_list, Isolate *isolate)
 {
+    auto context = isolate->GetCurrentContext();
     std::map<DWORD, TCHAR *> processMap;
     fillProcessMap(&processMap);
 
@@ -121,16 +122,16 @@ void getConnections(Local<Array> *result_list, Isolate *isolate)
         DWORDToString(remoteIpstr, owner->dwRemoteAddr);
 
         Local<Object> result = Object::New(isolate);
-        result->Set(String::NewFromUtf8(isolate, "pid"), Number::New(isolate, owner->dwOwningPid));
-        result->Set(String::NewFromUtf8(isolate, "taskName"), String::NewFromUtf8(isolate, processMap[owner->dwOwningPid]));
-        result->Set(String::NewFromUtf8(isolate, "localIP"), String::NewFromUtf8(isolate, localIpstr));
-        result->Set(String::NewFromUtf8(isolate, "localPort"), Number::New(isolate, ntohs((u_short)owner->dwLocalPort)));
-        result->Set(String::NewFromUtf8(isolate, "state"), String::NewFromUtf8(isolate, HumanReadableState(owner->dwState)));
-        result->Set(String::NewFromUtf8(isolate, "remoteIP"), String::NewFromUtf8(isolate, remoteIpstr));
-        result->Set(String::NewFromUtf8(isolate, "remotePort"), Number::New(isolate, ntohs((u_short)owner->dwRemotePort)));
-        result->Set(String::NewFromUtf8(isolate, "protocol"), String::NewFromUtf8(isolate, "TCP"));
+        result->Set(context, String::NewFromUtf8(isolate, "pid").ToLocalChecked(), Number::New(isolate, owner->dwOwningPid));
+        result->Set(context, String::NewFromUtf8(isolate, "taskName").ToLocalChecked(), String::NewFromUtf8(isolate, processMap[owner->dwOwningPid]).ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "localIP").ToLocalChecked(), String::NewFromUtf8(isolate, localIpstr).ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "localPort").ToLocalChecked(), Number::New(isolate, ntohs((u_short)owner->dwLocalPort)));
+        result->Set(context, String::NewFromUtf8(isolate, "state").ToLocalChecked(), String::NewFromUtf8(isolate, HumanReadableState(owner->dwState)).ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "remoteIP").ToLocalChecked(), String::NewFromUtf8(isolate, remoteIpstr).ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "remotePort").ToLocalChecked(), Number::New(isolate, ntohs((u_short)owner->dwRemotePort)));
+        result->Set(context, String::NewFromUtf8(isolate, "protocol").ToLocalChecked(), String::NewFromUtf8(isolate, "TCP").ToLocalChecked());
 
-        (*result_list)->Set(counter, result);
+        (*result_list)->Set(context, counter, result);
         counter++;
     }
 
@@ -144,16 +145,16 @@ void getConnections(Local<Array> *result_list, Isolate *isolate)
         DWORDToString(localIpstr, ownerUdp->dwLocalAddr);
 
         Local<Object> result = Object::New(isolate);
-        result->Set(String::NewFromUtf8(isolate, "pid"), Number::New(isolate, ownerUdp->dwOwningPid));
-        result->Set(String::NewFromUtf8(isolate, "taskName"), String::NewFromUtf8(isolate, processMap[owner->dwOwningPid]));
-        result->Set(String::NewFromUtf8(isolate, "localIP"), String::NewFromUtf8(isolate, localIpstr));
-        result->Set(String::NewFromUtf8(isolate, "localPort"), Number::New(isolate, ntohs((u_short)ownerUdp->dwLocalPort)));
-        result->Set(String::NewFromUtf8(isolate, "state"), String::NewFromUtf8(isolate, "*"));
-        result->Set(String::NewFromUtf8(isolate, "remoteIP"), String::NewFromUtf8(isolate, "*"));
-        result->Set(String::NewFromUtf8(isolate, "remotePort"), String::NewFromUtf8(isolate, "*"));
-        result->Set(String::NewFromUtf8(isolate, "protocol"), String::NewFromUtf8(isolate, "UDP"));
+        result->Set(context, String::NewFromUtf8(isolate, "pid").ToLocalChecked(), Number::New(isolate, ownerUdp->dwOwningPid));
+        result->Set(context, String::NewFromUtf8(isolate, "taskName").ToLocalChecked(), String::NewFromUtf8(isolate, processMap[owner->dwOwningPid]).ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "localIP").ToLocalChecked(), String::NewFromUtf8(isolate, localIpstr).ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "localPort").ToLocalChecked(), Number::New(isolate, ntohs((u_short)ownerUdp->dwLocalPort)));
+        result->Set(context, String::NewFromUtf8(isolate, "state").ToLocalChecked(), String::NewFromUtf8(isolate, "*").ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "remoteIP").ToLocalChecked(), String::NewFromUtf8(isolate, "*").ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "remotePort").ToLocalChecked(), String::NewFromUtf8(isolate, "*").ToLocalChecked());
+        result->Set(context, String::NewFromUtf8(isolate, "protocol").ToLocalChecked(), String::NewFromUtf8(isolate, "UDP").ToLocalChecked());
 
-        (*result_list)->Set(counter, result);
+        (*result_list)->Set(context, counter, result);
         counter++;
     }
     processMap.clear();
